@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery form validation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>jQuery Form validation</h1>
+        <form id="registration_form">
+            <div>
+                <input type="text" name="" id="fname" required="">
+                <span class="error_span" id="error_fname"></span>
+                <label> first name</label>
+            </div>
+            <div>
+                <input type="text" name="" id="lname" required="">
+                <span class="error_span" id="error_lname"></span>
+                <label> Last name</label>
+            </div>
+            <div>
+                <input type="email" name="" id="email" required="">
+                <span class="error_span" id="error_email"></span>
+                <label> Email Id</label>
+            </div>
+            <div>
+                <input type="password" name="" id="password" required="">
+                <span class="error_span" id="error_password"></span>
+                <label> Password</label>
+            </div>
+            <div>
+                <input type="password" name="" id="repassword" required="">
+                <span class="error_span" id="error_repassword"></span>
+                <label> Confirm Password</label>
+            </div>
+            <input type="submit" value="Register" name="" id="btn">
+        </form>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous">
+        </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#error_fname').hide();
+            $('#error_lname').hide();
+            $('#error_email').hide();
+            $('#error_password').hide();
+            $('#error_repassword').hide();
+
+            var error_FNAME = false;
+            var error_SNAME = false;
+            var error_EMAIL = false;
+            var error_PASSWORD = false;
+            var error_REPASSWORD = false;
+
+            $('#fname').focusout(function () {
+                check_fname();
+            });
+            $('#lname').focusout(function () {
+                check_lname();
+            });
+            $('#email').focusout(function () {
+                check_email();
+            });
+            $('#password').focusout(function () {
+                check_password();
+            });
+            $('#repassword').focusout(function () {
+                check_repassword();
+            });
+
+            function check_fname() {
+                var pattern = /^[a-zA-Z]*$/;
+                var fname = $('#fname').val();
+                if (pattern.test(fname) && fname != '') {
+                    $('#error_fname').hide();
+                    $('#fname').css("border-bottom", "2px solid #34f458");
+                }
+                else {
+                    $('#error_fname').show();
+                    $('#error_fname').html("Should contain only characters");
+                    $('#fname').css("border-bottom", "2px solid #f90a0a");
+                    error_FNAME = true;
+
+                }
+            }
+
+            function check_lname() {
+                var pattern = /^[a-zA-Z]*$/;
+                var lname = $('#lname').val();
+                if (pattern.test(lname) && lname != '') {
+                    $('#error_lname').hide();
+                    $('#lname').css("border-bottom", "2px solid #34f458");
+                }
+                else {
+                    $('#error_lname').show();
+                    $('#error_lname').html("Should contain only characters");
+                    $('#lname').css("border-bottom", "2px solid #f90a0a");
+                    error_LNAME = true;
+
+                }
+            }
+
+            function check_email() {
+                var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                var email = $('#email').val();
+                if (pattern.test(email) && email != '') {
+                    $('#error_email').hide();
+                    $('#email').css("border-bottom", "2px solid #34f458");
+                }
+                else {
+                    $('#error_email').show();
+                    $('#error_email').html("Invalid Email");
+                    $('#email').css("border-bottom", "2px solid #f90a0a");
+                    error_EMAIL = true;
+
+                }
+            }
+
+            function check_password() {
+                var password_length = $('#password').val().length;
+                if (password_length < 8) {
+                    $('#error_password').show();
+                    $('#error_password').html("Atleast 8 characters");
+                    $('#password').css("border-bottom", "2px solid #f90a0a");
+                    error_PASSWORD = true;
+                }
+                else {
+                    $('#error_password').hide();
+                    $('#password').css("border-bottom", "2px solid #34f458");
+
+                }
+            }
+
+            function check_repassword() {
+                var password = $('#password').val();
+                var repassword = $('#repassword').val();
+                if (password != repassword) {
+                    $('#reerror_password').show();
+                    $('#reerror_password').html("PAssword Did not Matched");
+                    $('#password').css("border-bottom", "2px solid #f90a0a");
+                    error_PASSWORD = true;
+                }
+                else {
+                    $('#reerror_password').hide();
+                    $('#repassword').css("border-bottom", "2px solid #34f458");
+
+                }
+            }
+
+            $("#registration_form").submit(function () {
+                error_FNAME = false;
+                error_LNAME = false;
+                error_EMAIL = false;
+                error_PASSWORD = false;
+                error_REPASSWORD = false;
+
+                check_fname();
+                check_lname();
+                check_email();
+                check_password();
+                check_repassword();
+
+                if (error_FNAME === false && error_LNAME === false && error_EMAIL === false &&
+                    error_PASSWORD === false && error_REPASSWORD === false) {
+                    alert("Registration Successfull");
+                    return true;
+                }
+                else {
+                    alert("Please Fill the Form Correctly");
+                    return false;
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>

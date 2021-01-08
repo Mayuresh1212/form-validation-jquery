@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Form validation</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container my-5">
+        <h2 class="text-center text-warning my-5">JQUERY FORM VALIDATION</h2>
+        <div class="col-lg-8 m-auto d-block">
+            <form>
+                <div class="form-group">
+                    <label for="Username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username">
+
+                    <h5 id="usercheck"> </h5>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Enter Password">
+                    <h5 id="passcheck"> </h5>
+                </div>
+                <div class="form-group">
+                    <label for="confirm password">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confpwd" placeholder="Enter Password">
+                    <h5 id="confpasscheck"> </h5>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="remrmber"> Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-primary my-2" id="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript">
+
+
+    $(document).ready(function(){
+            $('#usercheck').hide();
+            $('#passcheck').hide();
+            $('#confpasscheck').hide();
+
+            var user_err = true;
+            var pass_err = true;
+            var confpass_err = true;
+
+            $('#username').keyup(function(){
+                username_check();
+            });
+
+            function username_check(){
+                var user_val = $('#username').val();
+
+                if (user_val.length == '') {
+                    $('#usercheck').show();
+                    $('#usercheck').html("**Username should not be empty");
+                    $('#usercheck').focus();
+                    $('#usercheck').css("color", "red");
+                    user_err = false;
+                    return false;
+                }
+                else {
+                    $('#usercheck').hide();
+                }
+
+                if ((user_val.length < 3) || (user_val.length > 10)) {
+                    $('#usercheck').show();
+                    $('#usercheck').html("**Username must be between 3 to 10 digits");
+                    $('#usercheck').focus();
+                    $('#usercheck').css("color", "red");
+                    user_err = false;
+                    return false;
+                }
+                else {
+                    $('#usercheck').hide();
+                }
+            }
+
+
+            $('#password').keyup(function () {
+                password_check();
+            });
+
+            function password_check() {
+                var pass_val = $('#password').val();
+
+                if (pass_val.length == '') {
+                    $('#passcheck').show();
+                    $('#passcheck').html("**Password should not be empty");
+                    $('#passcheck').focus();
+                    $('#passcheck').css("color", "red");
+                    pass_err = false;
+                    return false;
+                }
+                else {
+                    $('#passcheck').hide();
+                }
+
+                if ((pass_val.length < 3) || (pass_val.length > 10)) {
+                    $('#passcheck').show();
+                    $('#passcheck').html("**Password must be between 3 to 10 digits");
+                    $('#passcheck').focus();
+                    $('#passcheck').css("color", "red");
+                    pass_err = false;
+                    return false;
+                }
+                else {
+                    $('#passcheck').hide();
+                }
+            }
+
+            $('#confpwd').keyup(function () {
+                conf_pass();
+            });
+
+            function conf_pass() {
+                var confpass_val = $('#confpwd').val()
+                var pass_val = $('#password').val();
+
+                if (pass_val != confpass_val) {
+                    $('#confpasscheck').show();
+                    $('#confpasscheck').html("**Password is incorrect");
+                    $('#confpasscheck').focus();
+                    $('#confpasscheck').css("color", "red");
+                    confpass_err = false;
+                    return false;
+                }
+                else {
+                    $('#confpasscheck').hide();
+                }
+            }
+
+            $('#submit').click(function(){
+
+                user_err = true;
+                pass_err = true;
+                confpass_err = true;
+
+                username_check();
+                password_check();
+                conf_pass();
+
+                if ((user_err == true) && (pass_err == true) && (confpass_err == true) ) {
+                    return true;
+                }
+                else{
+        
+                    return false;            
+                }
+
+            });
+     });
+
+    </script>
+</body>
+
+</html>
